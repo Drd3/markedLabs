@@ -1,0 +1,42 @@
+@import "fonts.scss";
+@import "colors.scss";
+
+html{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: "Oswald";
+    font-weight: 300;
+    padding: 0;
+    margin: 0; 
+}
+
+a{
+    color: $secondary;
+}
+
+img{
+    width: 100%;
+}
+
+.fit-cover{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hexagon{
+    clip-path: polygon(50% 0, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+}
+
+.hexagon-shadow{
+    filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.2));
+    -webkit-filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.3));   
+}
+
+.hexagon-shadow div{
+    clip-path: polygon(50% 0, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+}
