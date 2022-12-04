@@ -1,6 +1,11 @@
 @import "fonts.scss";
 @import "colors.scss";
 
+
+*{
+    box-sizing: border-box;
+}
+
 html{
     margin: 0;
     padding: 0;
@@ -20,6 +25,44 @@ a{
 img{
     width: 100%;
 }
+input, select, textarea{
+    box-sizing: border-box;
+    padding: .1rem .3rem;
+    font-size: .9rem;
+    font-family: 'Oswald';
+    font-weight: 300;
+    outline: none;
+    border: 1px solid #afafaf;
+    padding: .5rem;
+    width: 100%;
+}
+input:focus, select:focus, textarea:focus{
+    border-color: #256D85;
+    box-shadow: 0 0 2px 2px #e9e9e9;
+}
+
+/*========= BUTTONS STYLES=========*/
+
+button{
+    border: none;
+    background-color: transparent;
+    font-family: "Oswald";
+    font-weight: 300;
+    font-size: 1rem;
+    padding: .5rem;
+
+}
+
+.btn-primary{
+    background-color: #256D85;
+    color: #8FE3CF;
+    box-shadow: -1px 1.2px 2px #0000006e;
+}
+
+
+/*========= BUTTONS STYLES=========*/
+
+
 
 .fit-cover{
     position: relative;

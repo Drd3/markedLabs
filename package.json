@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
+    "element-ui": "^2.15.12",
     "hooper": "^0.3.4",
     "sass-resources-loader": "^2.2.5",
     "vue": "^2.6.14",

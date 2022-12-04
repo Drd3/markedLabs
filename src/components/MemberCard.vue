@@ -12,7 +12,7 @@
                 <div v-for="(socialMedia, index) in socialMedias" :key="index" class="social-media">
                 </div>
             </div>
-            <div>
+            <div class="desc">
                 {{description}}
             </div>
         </div>
@@ -32,7 +32,9 @@ export default{
 </script>
 <style lang="scss" scoped>
     .member-card{
-        background: #ccc;
+        width: 100%;
+        max-width: 260px;
+        margin: auto;
         .member-photo{
             div{
                 width: 130px;
@@ -63,6 +65,12 @@ export default{
                     height: 25px;
                     margin: 0 .5rem;
                 }
+            }
+
+            .desc{
+                width: 100%;
+                color: $text-muted;
+                font-size: .93rem;
             }
         }
     }

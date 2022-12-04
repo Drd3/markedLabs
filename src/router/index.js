@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/homePage/HomeView.vue'
+import UserFlowManager from '../views/UserFlowManager.vue'
 
 Vue.use(VueRouter)
 
@@ -8,8 +9,14 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
   },
+  {
+    path:"/UserFlowManager",
+    name:'UserFlowManager',
+    component: UserFlowManager
+  },
+  ,
   {
     path: '/about',
     name: 'about',

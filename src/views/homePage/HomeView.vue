@@ -7,6 +7,7 @@
             Market Labs
             </h1>
             <h5 class="header-subtitle">E-Commerce de servicios de laboratorios.</h5>
+            <SearchInput></SearchInput>
          </div>
         </div>
       </header>
@@ -43,7 +44,7 @@
         </div>
       </section>
       <section class="objectives">
-        <div class="container">
+        <div class="container section-border">
           <h1 class="section-title">¿CUALES SON NUESTROS OBJETIVOS?</h1>
           <DecorativeHexagons :shadows-active="true"></DecorativeHexagons>
           <div class="objectives-list">
@@ -68,7 +69,7 @@
               </div>
               
             </div>
-            <div class="objective">
+            <div class="objective ">
               <div class="objective-image hexagon-shadow">
                 <div>
                   <img src="../../assets/img/team-members-2.jpg" class="fit-cover"/>
@@ -82,13 +83,103 @@
           </div>
         </div>
       </section>
-      <section class="how-it-works">
-        <div class="container">
+      <section class="how-it-works ">
+        <div class="container section-border">
           <h1 class="section-title">¿COMO FUNCIONA?</h1>
+          <DecorativeHexagons :shadows-active="true"></DecorativeHexagons>
+
+          <div class="explanation-list">
+            <div class="explanation-item-container">
+              <div class="explanation-item">
+                <div class="explanation-image hexagon">
+                  <img src="../../assets/img/exp-1.png"/>
+                </div>
+                <div class="explanation-info">
+                  <div class="explanation-title">
+                    Busqueda
+                  </div>
+                  <span>Del analisis que necesitas</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="explanation-item-container">
+              <div class="explanation-item">
+                <div class="explanation-image hexagon">
+                  <img src="../../assets/img/exp-1.png"/>
+                </div>
+                <div class="explanation-info">
+                  <div class="explanation-title">
+                    Selección
+                  </div>
+                  <span>Del laboratorio que mas se adecue a tus necesidades.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="explanation-item-container">
+              <div class="explanation-item">
+                <div class="explanation-image hexagon">
+                  <img src="../../assets/img/exp-1.png"/>
+                </div>
+                <div class="explanation-info">
+                  <div class="explanation-title">
+                    Formulario
+                  </div>
+                  <span>Del laboratorio que mas se adecue a tus necesidades.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="explanation-item-container">
+              <div class="explanation-item">
+                <div class="explanation-image hexagon">
+                  <img src="../../assets/img/exp-1.png"/>
+                </div>
+                <div class="explanation-info">
+                  <div class="explanation-title">
+                    Envio
+                  </div>
+                  <span>Del laboratorio que mas se adecue a tus necesidades.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="explanation-item-container">
+              <div class="explanation-item">
+                <div class="explanation-image hexagon">
+                  <img src="../../assets/img/exp-1.png"/>
+                </div>
+                <div class="explanation-info">
+                  <div class="explanation-title">
+                    Analisis
+                  </div>
+                  <span>Del laboratorio que mas se adecue a tus necesidades.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="explanation-item-container">
+              <div class="explanation-item">
+                <div class="explanation-image hexagon">
+                  <img src="../../assets/img/exp-1.png"/>
+                </div>
+                <div class="explanation-info">
+                  <div class="explanation-title">
+                    Informe
+                  </div>
+                  <span>Del laboratorio que mas se adecue a tus necesidades.</span>
+                </div>
+              </div>
+            </div>
+
+
+            
+          </div>
         </div>
       </section>
       <section class="our-team">
-        <div class="container">
+        <div class="container ">
           <h1 class="section-title">NUESTRO EQUIPO</h1>
           <DecorativeHexagons :shadows-active="true"></DecorativeHexagons>
           <hooper :settings="teamMembersCarousel">
@@ -113,6 +204,7 @@ import 'hooper/dist/hooper.css';
 import NewLabCard  from '@/components/NewLabCard.vue';
 import DecorativeHexagons from '@/components/DecorativeHexagons.vue';
 import MemberCard from '@/components/MemberCard.vue';
+import SearchInput from '@/components/SearchInput.vue';
 
 
 export default {
@@ -123,7 +215,8 @@ export default {
     HooperNavigation,
     NewLabCard,
     DecorativeHexagons,
-    MemberCard
+    MemberCard,
+    SearchInput
   },
   data: function(){
     return({
@@ -134,8 +227,6 @@ export default {
       },
 
       teamMembersCarousel:{
-        autoPlay: true,
-        playSpeed: 2000,
         centerMode: true
       },
 
@@ -200,7 +291,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-
+    text-align: center;
     color: $success;
 
     .header-title{
@@ -216,20 +307,35 @@ export default {
       letter-spacing: .5px;
     }
   }
+  
+  .hooper{
+      min-height: fit-content;
+      height: 200px;
+      padding-left: 0;
+  }
 
   section{
-    padding: 5rem 1rem;
+      padding: 0 1rem;
+      text-align: center;
+
+      .container{
+        padding: 5rem 0;
+      }
+
     .section-title{
       color: $primary;
       font-weight: 300;
       font-size: 1.5rem;      
     }
   }
+
+  .section-border{
+    border-bottom: $border;
+  }
+
   .recent-labs{
     .hooper{
-      min-height: fit-content;
-      height: 300px;  
-
+      
       .hooper-navigation{
         .hooper-prev{
         margin-left: -1rem;
@@ -264,6 +370,7 @@ export default {
 
   .objectives{
     .objectives-list{
+      margin-top: 2rem;
       max-width: 388px;
       margin: auto;
       .objective{
@@ -287,10 +394,84 @@ export default {
     }
   }
 
+  $hexagonSize: 75px; 
+  .how-it-works{
+    .explanation-list{
+      margin-top: 2rem;
+      .explanation-item-container{
+        width: 50%;
+        display: flex;
+        margin: -.5rem 0;
+      }
+      .explanation-item{
+        display: flex;
+        align-items: center;
+        margin: -.1rem 0;
+        justify-content: center;
+        .explanation-image{
+          height:$hexagonSize;
+          width: $hexagonSize;
+          flex-shrink: 0;
+          background: $secondary;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          img{
+            width: 50%;
+            height: 50%;
+            position: relative;
+            object-fit: contain;
+          }
+        }
+        .explanation-info{
+          .explanation-title{
+            text-transform: uppercase;
+            color: $primary;
+            font-weight: 400;
+            font-size: 1rem;
+
+          }
+          span{
+            font-size: .9rem;
+            line-height: 1px;
+            display: none;
+          }
+        }
+      }
+      .explanation-item-container:nth-child(odd){
+        margin-left: auto;
+        .explanation-item{
+          margin-left: -1.2rem;
+          .explanation-info{
+            text-align: left;
+          }
+        }
+      }
+
+      .explanation-item-container:nth-child(even){
+        justify-content: flex-end;
+        .explanation-item{
+          margin-right: -1.2rem;
+          .explanation-image{
+          order: 2;  
+        }
+        .explanation-info{
+          order: 1;
+          text-align: right;
+        }
+        }
+        
+      }
+    }
+  }
+
   .our-team{
+
     .hooper{
       min-height: fit-content;
-      height: 1000px;
+      height: 500px;
+      margin-top: 2rem
     }
   }
 
