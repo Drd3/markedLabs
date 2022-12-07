@@ -8,14 +8,14 @@
             </div>
             <div class="navbar-content ">
                 <div class="nav-item">
-                    <i class="fa fa-regular fa-user"></i>
+                    <i class="el-icon-user"></i>
                 </div> 
 
                 <div @click="(showNavbar = true)"  class="nav-item">
-                    <i class="fa-solid fa-bars"></i>
+                    <i class="el-icon-more-outline"></i>
                 </div> 
 
-                <div :class="{'show-navbar': showNavbar}" v-click-outside="showNavbar = false" class="navbar-links-container">
+                <div :class="{'show-navbar': showNavbar}" class="navbar-links-container">
                     <router-link to="/">Home</router-link> 
                     <router-link to="/about">About</router-link>
                 </div>
@@ -23,10 +23,7 @@
             </div>
         </div>
        
-        <div class="input-search-container">
-            <input placeholder="Que tipo de analisis necesitas" type="text">
-            <button class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
+        <SearchInput></SearchInput>
     </nav>
 </template>
 
@@ -126,12 +123,15 @@
 
 <script>
 
-
+import SearchInput from './SearchInput.vue';
 
 
 
 export default {
     name: "NabBar",
+    components:{
+        SearchInput
+    },
     data: function(){
         return({
             showNavbar: false

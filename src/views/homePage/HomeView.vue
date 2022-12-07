@@ -285,7 +285,9 @@ export default {
 
   
   header{
-    background: $primary;
+    background-image: url(../../assets/img/Header-mobile.png);
+    background-size: cover;
+    background-repeat: no-repeat;
     min-height: fit-content;
     height: 50vh;
     display: flex;

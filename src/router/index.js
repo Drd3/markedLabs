@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/homePage/HomeView.vue'
 import UserFlowManager from '../views/UserFlowManager.vue'
+import samplesTags from '../components/samplesTags.vue'
 
 Vue.use(VueRouter)
 
@@ -16,7 +17,11 @@ const routes = [
     name:'UserFlowManager',
     component: UserFlowManager
   },
-  ,
+  {
+    path: "/samplesTags",
+    name: 'samplesTags',
+    component: samplesTags
+  },
   {
     path: '/about',
     name: 'about',

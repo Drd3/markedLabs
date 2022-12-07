@@ -1,7 +1,7 @@
 <template>
     <div class="lab-card">
         <div class="lab-data-info">
-            <div class="lab-star-rating"><i class="fa-solid fa-star"></i>{{labData.starRating}}</div>
+            <div class="lab-star-rating"><i class="el-icon-star-on"></i>{{labData.starRating}}</div>
             <div class="lab-card-logo">
                 <img :src="labData.labLogo" class="fit-cover" :alt="labData.labName">
             </div>

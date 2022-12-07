@@ -32,7 +32,7 @@
         <div class="form-item">
             <div class="label">Tipo de analisis</div>
             <el-autocomplete
-            popper-class="my-autocomplete"
+                popper-class="my-autocomplete"
                 v-model="analisysType"
                 label="tipo de analisis"
                 :fetch-suggestions="querySearchAsync"
@@ -44,25 +44,38 @@
                 slot="suffix"
                >
             </i>
-            <template slot-scope="{ item }">
-                <div class="value">{{ item.value }}</div>
-            </template>   
+            
         </el-autocomplete>
         </div>
-
-
-        <button class="btn-primary" @click="toSubmissionForm()">Contratar</button>
-
+        <SamplesTable :samples-data="items" :updateSamplesData="updateTable"></SamplesTable>
+        <button class="contract-service btn-primary" @click="toSubmissionForm()">Contratar<i class="el-icon-right"></i></button>
     </div>
 </template>
 
-
 <script>
 import LabHeader from '@/components/LabHeader.vue';
+import BEditableTable from 'bootstrap-vue-editable-table';
+import SamplesTable from '@/components/SamplesTable.vue';
+
+import {
+  BIconTrash,
+  BIconPencil,
+  BIconX,
+  BIconCheck,
+  BButton,
+} from "bootstrap-vue";
 export default {
     name: "SamplesFrom",
     components:{
-        LabHeader
+        LabHeader,
+        BEditableTable,
+        BButton,
+        BIconTrash,
+        BIconPencil,
+        BIconX,
+        BIconCheck,
+        BButton,
+        SamplesTable
     },
     props:[
      "labData"
@@ -73,51 +86,56 @@ export default {
             analisysType: "",
             links: "",
             timeout: null,
+            updateTable : false,
 
-
-            tableData:[
+              items: [
                 {
+                    id:1,
                     property:"Emanuel Rico Rojas",
                     propertyIdentification: "10022313254",
-                    dateOfSampling: "20/11/2022",
+                    dateOfSampling: "20-11-2022",
                     city: "Manizales",
                     sidewalk: "Bajo Tablazo",
-                    shadowPrecent: "12%"
+                    shadowPercent: 12,
 
                 },
                 {
+                    id:2,
                     property:"Emanuel Rico Rojas",
                     propertyIdentification: "10022313254",
-                    dateOfSampling: "20/11/2022",
+                    dateOfSampling: "2022-11-20",
                     city: "Manizales",
                     sidewalk: "Bajo Tablazo",
-                    shadowPrecent: "12%"
-
+                    shadowPercent: 12,
                 },
                 {
+                    id: 3,
                     property:"Emanuel Rico Rojas",
                     propertyIdentification: "10022313254",
-                    dateOfSampling: "20/11/2022",
+                    dateOfSampling: "2022-11-20",
                     city: "Manizales",
                     sidewalk: "Bajo Tablazo",
-                    shadowPrecent: "12%"
+                    shadowPercent: 12,
+                },
+              ],
 
-                }
-            ]
         })
     },
     methods: {
-        toSubmissionForm(){
-            this.$emit('to-submission-form', {
-                status: 4,
-                labData : this.labData
-            })
-        },
+
+      toSubmissionForm(){
+          this.$emit('to-submission-form', {
+              status: 4,
+              labData: this.labData
+          })
+          console.log("A formlario de el envio")
+      },
+      
       loadAll() {
 
-        var analisysList = {}
+        var analisysList = []
 
-        labData.labAnalisysTypes.forEach(analisys => {
+        this.labData.labAnalisysTypes.forEach(analisys => {
                 analisysList.push({ "value": analisys},)
         });
         
@@ -139,8 +157,15 @@ export default {
       },
       handleSelect(item) {
         console.log(item);
-      }
+      },
+      //====== TABLE DATA ===//
     },
+
+    computed:{
+
+    },
+    
+
     mounted() {
       this.links = this.loadAll();
     }
@@ -186,4 +211,10 @@ export default {
       }
     }
   }
+
+
+.contract-service{
+  margin-left: auto;
+  width: fit-content;
+}
 </style>

@@ -158,6 +158,7 @@ export default {
         }
 
         .questions-list{
+     
             margin-top: 2rem;
             .question-item{
                 .question{
