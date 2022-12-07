@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "bootstrap-vue": "^2.23.1",
+    "bootstrap-vue-editable-table": "^0.1.9",
     "core-js": "^3.8.3",
     "element-ui": "^2.15.12",
     "hooper": "^0.3.4",
