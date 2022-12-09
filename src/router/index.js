@@ -24,7 +24,8 @@ const routes = [
       {
         path: "",
         name: 'ResultsPage',
-        component: ResultsPage
+        component: ResultsPage,
+        props: true
       },
       {
         path:'/labDetail/:labId',

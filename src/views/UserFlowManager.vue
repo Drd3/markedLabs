@@ -2,7 +2,7 @@
     <div class="flow-container">
         <NavBar class="d-print-none"></NavBar>
         <Navigation v-if="(status != 7)" class="d-print-none">
-            <button class="filter-results ml-auto" @click="(showFilters = true)"><i class="el-icon-arrow-down"></i> Filtrar</button>
+            <button class="filter-results ml-auto" @click="showFiltersHandler()"><i class="el-icon-arrow-down"></i> Filtrar</button>
         </Navigation>
         <router-view/>
         <!-- <SamplesForm v-if="(status == 3)" :lab-data="selectedLab" v-on:to-submission-form="toSubmissionForm"></SamplesForm>
@@ -68,12 +68,11 @@ export default {
         loggedToForms(n){
             this.status = n
         }*/
-    },
-    watch:{
-        showFilters(newVal, Oldval){
-            
+
+        showFiltersHandler(){
+            this.$EventBus.$emit('active-filters', true)
         }
-    }
+    },
 }
 </script>
 
