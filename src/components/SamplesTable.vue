@@ -7,13 +7,16 @@
         disableDefaultEdit
         :rowUpdate="rowUpdate"
         :editMode="'row'"
-        bordered
+        striped hover
+        responsive
+        outlined
+        sticky-header	
         class="editable-table"
         v-model="items"
         :fields="fields"
       >
         <template #cell(isActive)="data">
-          <span v-if="data.value">Yes</span>
+          <span v-if="data.value" >Yes</span>
           <span v-else>No</span>
         </template>
         <template #cell(edit)="data">
@@ -70,7 +73,7 @@
         sendData: false,
 
         fields: [
-          { key: "delete", label: "" },
+          { key: "edit", label: "" },
           {
             key: "property",
             label: "Nombre del propietario",
@@ -78,13 +81,13 @@
             editable: true,
             placeholder: "Enter Name...",
             class: "name-col",
-
+            sortable: true
           },
           {
             key: "propertyIdentification",
             label: "Identificacion del propietario",
             type: "text",
-            class: "department-col",
+            class: "identidication-col",
             editable: true
 
           },         
@@ -95,6 +98,7 @@
             editable: true,
             class: "date-col",
             locale: "en",
+            sortable: true,
             "date-format-options": {
               year: "numeric",
               month: "numeric",
@@ -127,13 +131,13 @@
             type:"range", min:"0", max:"100",
             editable: true,
             placeholder: "Ingresa el porcentaje de sombra",
-            class: "age-col",
+            class: "shadow-col",
             editable: true
 
           },
-          { key: "edit", label: "" },
+          { key: "delete", label: "" },
         ],
-        items:  this.$store.state.samples,
+        items:  this.$store.state.samples[0].tableContent,
         rowUpdate: {},
       };
     },
@@ -183,69 +187,48 @@
   <style lang="scss" scoped>
   .table-container {
     margin: 0;
-    overflow-x: auto;
-    table.editable-table {
-        width: 700px;
+    overflow: auto;
+    max-height: 500px;
+    .editable-table {
+      width: 800px;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e6e6e6;
+      box-shadow: 3px 1.2px 5px -1px #0000004f;
+
+      thead{
+        background: $secondary;
+      }
+      .data-cell{
+        padding: .2rem;
+      }
+      .shadow-col{
+        width: 300px;
+      }
+      .identidication-col{
+        width: 400px;
+      }
+
     }
   }
 
-  table .row{
-    height: 40px;
-  }
-  
-  table.b-table td{
-    min-height: 40px;
-  }
 
-  table.b-table{
-    width: auto;
-  }
-  table.editable-table td {
-    vertical-align: middle;
-    min-height: 50px;
-  }
   
-  .editable-table .data-cell {
-    padding: 8px;
-    vertical-align: middle;
-  }
-  
-  .editable-table .custom-checkbox {
-    width: 50px;
-  }
-  
+
   .remove-icon {
-    color: red;
+    color: $danger;
     cursor: pointer;
     font-size: 20px;
   }
   
   .edit-icon {
-    color: rgb(4, 83, 158);
+    color: $primary;
     cursor: pointer;
     font-size: 20px;
   }
   
-  .name-col {
-    width: 120px;
-  }
-  
-  .department-col {
-    width: 150px;
-  }
-  
-  .age-col {
-    width: 100px;
-  }
-  
-  .date-col {
-    width: 200px;
-  }
-  
-  .is-active-col {
-    width: 100px;
-  }
-
+ 
   .btn-add-sample{
     width: 100%;
     margin-bottom: 1rem;

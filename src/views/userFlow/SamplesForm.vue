@@ -77,9 +77,6 @@ export default {
         BButton,
         SamplesTable
     },
-    props:[
-     "labData"
-    ],
     data: function(){
         return({
             sampleType:"",
@@ -88,46 +85,18 @@ export default {
             timeout: null,
             updateTable : false,
 
-              items: [
-                {
-                    id:1,
-                    property:"Emanuel Rico Rojas",
-                    propertyIdentification: "10022313254",
-                    dateOfSampling: "20-11-2022",
-                    city: "Manizales",
-                    sidewalk: "Bajo Tablazo",
-                    shadowPercent: 12,
-
-                },
-                {
-                    id:2,
-                    property:"Emanuel Rico Rojas",
-                    propertyIdentification: "10022313254",
-                    dateOfSampling: "2022-11-20",
-                    city: "Manizales",
-                    sidewalk: "Bajo Tablazo",
-                    shadowPercent: 12,
-                },
-                {
-                    id: 3,
-                    property:"Emanuel Rico Rojas",
-                    propertyIdentification: "10022313254",
-                    dateOfSampling: "2022-11-20",
-                    city: "Manizales",
-                    sidewalk: "Bajo Tablazo",
-                    shadowPercent: 12,
-                },
-              ],
+            labData: [],
 
         })
     },
     methods: {
 
       toSubmissionForm(){
-          this.$emit('to-submission-form', {
+        this.$router.push({name: 'submissionForm', params:{ labId: this.$route.params.labId, tableId: this.$store.state.samples[0].tableId} })
+          /*this.$emit('to-submission-form', {
               status: 4,
               labData: this.labData
-          })
+          })*/
           console.log("A formlario de el envio")
       },
       
@@ -158,8 +127,19 @@ export default {
       handleSelect(item) {
         console.log(item);
       },
-      //====== TABLE DATA ===//
+
+
+
+      getLabById(){
+        var filteredLab = this.$store.state.labList.filter(n => n.id == this.$route.params.labId)
+        this.labData = filteredLab[0]
+      },
+
+      SectionName(){
+          this.$EventBus.$emit("section-name", {sectionName: "Formulario de muestras", activeFiltersButton: false});
+      }
     },
+
 
     computed:{
 
@@ -167,7 +147,9 @@ export default {
     
 
     mounted() {
+      this.getLabById();
       this.links = this.loadAll();
+      this.SectionName()
     }
 }
 </script>

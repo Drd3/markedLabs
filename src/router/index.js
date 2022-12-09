@@ -2,8 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/homePage/HomeView.vue'
 import UserFlowManager from '../views/UserFlowManager.vue'
+import ResultsPage from '../views/userFlow/ResultsPage.vue'
 import samplesTags from '../components/samplesTags.vue'
-
+import LabDetail from '../views/userFlow/LabDetail.vue';
+import SamplesFrom from '../views/userFlow/SamplesForm.vue';
+import Login from '../views/userFlow/Login.vue';
+import SubmissionForm from '../views/userFlow/SubmissionForm.vue';
+import FinalSteps from '../views/userFlow/FinalSteps.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,8 +19,41 @@ const routes = [
   },
   {
     path:"/UserFlowManager",
-    name:'UserFlowManager',
-    component: UserFlowManager
+    component: UserFlowManager,
+    children:[
+      {
+        path: "",
+        name: 'ResultsPage',
+        component: ResultsPage
+      },
+      {
+        path:'/labDetail/:labId',
+        name: 'labDetail',
+        component: LabDetail
+      },
+      {
+        path:'/samplesForm/:labId',
+        name: 'samplesForm',
+        component: SamplesFrom
+      },
+      {
+        path:'/login',
+        name: 'login',
+        component: Login,
+        props: true
+      },
+      {
+        path:'/submissionForm/:labId/:tableId',
+        name: 'submissionForm',
+        component: SubmissionForm
+      },
+      {
+        path:'/finalSteps',
+        name: 'finalSteps',
+        component:FinalSteps
+      }
+      
+    ]
   },
   {
     path: "/samplesTags",

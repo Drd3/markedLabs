@@ -1,6 +1,23 @@
 <template>
     <div class="container">
-        <LabCard v-for="(lab, index) in labList"  :key="index" :lab-data="lab"  @click.native="ToDetails(lab)" ></LabCard>
+        <div class="filter-list-container">
+            <div class="filters-list">
+                <h2>Filtrar por:</h2>
+                <button>
+                    <i class="el-icon-close"></i>
+                </button>
+                <div class="acreditation-item">
+                    <h5>Precio</h5>
+                    
+                </div>
+                <div class="acreditation-item">
+                    <h5>Ubicación</h5>
+                    
+                </div>
+            </div>
+        </div>
+
+        <LabCard v-for="(lab, index) in labList"  :key="index" :lab-data="lab"  @click.native="ToDetails(lab.id)" ></LabCard>
     </div>
 </template>
 
@@ -17,83 +34,28 @@ export default{
 
             //===== SIMULATED DATA=======//
 
-            labList: [
-                {
-                    labName : "Terralab",
-                    labLogo: "http://latentacion.com.co/wp-content/uploads/2020/12/Logo-JPG-01-150x150.jpg",
-                    starRating: 4.5,
-                    labLocation: "Manizales / Caldas",
-                    address: "Cra 15 # 14 -05",
-                    labAnalisysTypes: ["pH", "cadmio", "acidez", "boro", "azufre"],
-                    pricing: {
-                        forUnit: 200000,
-                        wholesale: 150000,
-                        wholesalePolitic: 10
-                    },
-                    email: "loremipsum@example.co",
-                    phone: "3196696945"
-                    
-                },
-                {
-                    labName : "Laboratorio de Manizales",
-                    labLogo: "http://latentacion.com.co/wp-content/uploads/2020/12/Logo-JPG-01-150x150.jpg",
-                    starRating: 3.5,
-                    labLocation: "Manizales / Caldas",
-                    address: "Cra 15 # 14 -05",
-                    labAnalisysTypes: ["pH", "cadmio", "boro", "azufre"],
-                    pricing: {
-                        forUnit: 150000,
-                        wholesale: 100000,
-                        wholesalePolitic: 15
-                    },
-                    email: "loremipsum@example.co",
-                    phone: "3196696945"
-                    
-                },
-                {
-                    labName : "Laboratorio de Medellín",
-                    labLogo: "http://latentacion.com.co/wp-content/uploads/2020/12/Logo-JPG-01-150x150.jpg",
-                    starRating: 4.8,
-                    labLocation: "Medellin / Antioquia",
-                    address: "Cra 15 # 14 -05",
-                    labAnalisysTypes: ["pH", "cadmio", "acidez", "boro", "azufre", "cacao"],
-                    pricing: {
-                        forUnit: 220000,
-                        wholesale: 160000,
-                        wholesalePolitic: 6
-                    },
-                    email: "loremipsum@example.co",
-                    phone: "3196696945"
-                    
-                },
-                {
-                    labName : "Laboratorio universitario",
-                    labLogo: "http://latentacion.com.co/wp-content/uploads/2020/12/Logo-JPG-01-150x150.jpg",
-                    starRating: 4.1,
-                    labLocation: "Manizales / Caldas",
-                    address: "Cra 15 # 14 -05",
-                    labAnalisysTypes: ["pH", "cadmio", "acidez", "boro", "azufre"],
-                    pricing: {
-                        forUnit: 210000,
-                        wholesale: 120000,
-                        wholesalePolitic: 13
-                    },
-                    email: "loremipsum@example.co",
-                    phone: "3196696945"
-                    
-                }
-            ]
+            labList: this.$store.state.labList
         })
     },
     methods:{
-        ToDetails(lab){
-            this.$emit('to-details', {
+        ToDetails(labId){
+            this.$router.push({ name: 'labDetail', params: { labId } })
+            /*this.$emit('to-details', {
                 labData : lab,
                 status : 2} 
-            )
+            )*/
+            
             console.log('detectado')
+        },
+        SectionName(){
+            this.$EventBus.$emit("section-name", {sectionName: "Pagina de resultados", activeFiltersButton: true});
         }
+    },
+
+    mounted(){
+        this.SectionName()
     }
+
 }
 </script>
 
@@ -101,6 +63,28 @@ export default{
 
     .container{
         padding: 0;
+    }
+    .filter-list-container{
+        position: fixed;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 43, 91, .4);
+        transform: translateY(0vh);
+    }
+    .filters-list{
+        padding: 2rem 1.5rem;
+        background: #fff;
+        display: block;
+        width: 100%;
+        border: $border;
+        min-height: 70vh;
+        border-radius: 10px;
+        position: absolute;
+        bottom: 0;
+        box-shadow: 0px -2px 20px 3px rgba(0, 0, 0, .4);
     }
 
 </style>

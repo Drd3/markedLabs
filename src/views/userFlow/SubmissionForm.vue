@@ -2,69 +2,109 @@
     <div class="container">
         <div class="lab-info-card">
             <div class="lab-info">
-                <div>
-                    <img src="" alt="">
-                    <div class="lab-name">Laboratorio</div>
+                <div class="card-pres">
+                    <img :src="labData.labLogo" alt="">
+                    <div class="lab-name">{{labData.labName}}</div>
                 </div>
                 <div class="price">
                     <small>Precio por muestra</small>
-                    <div>200.000</div>
+                    <div>{{labData.pricing.forUnit}}</div>
                 </div>
             </div>
             <div class="invoice-info">
-                <span class="table-name">Table name /  </span> <small>1 muestra</small>
+                <span class="table-name">{{tableData.tableName}} /  </span> <small>{{tableData.tableContent.length}} <span v-if="(tableData.tableContent.length <= 1)">Muestra</span>
+                    <span v-if="(tableData.tableContent.length >= 2)">Muestras</span>
+                </small>
                 <div class="invoice">
                 <div class="invoice-item">
-                    <span>Precio de envio</span>
-                    <span class="invoice-price">200.000</span>
+                    <span>Costo del analisis</span>
+                    <span class="invoice-price">{{SamplesCost}}</span>
                 </div>
                 <div class="invoice-item">
                     <span>Precio de envio</span>
-                    <span class="invoice-price">200.000</span>
+                    <span class="invoice-price">{{sendCost}}</span>
                 </div>
                 <div class="invoice-item total-price">
                     <span>Precio total</span>
-                    <span class="invoice-price">200.000</span>
+                    <span class="invoice-price">{{TotalPrice}}</span>
                 </div>
             </div>
             </div>
         </div>
         <div class="direction-card">
             Direccion del destino
-            <div>Manizales / Caldas - Cra 15 # 14- 05</div>
+            <div>{{labData.labLocation}} - {{labData.address}}</div>
         </div>
         <div class="send-method">
-            <div class="form-item">
-                <div class="label">Metodo de envio</div>
-                <el-select v-model="sendMethod" placeholder="Selecciona metodo de envio">
-                <el-option
-                    v-for="item in sendMethodOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                    </el-option>
-                </el-select>
-            </div>
-            <div class="form-item">
-                <div class="label">Metodo de pago</div>
-                <el-select v-model="payMethod" placeholder="Selecciona metodo de pago">
-                <el-option
-                    v-for="item in payMethodOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                    </el-option>
-                </el-select>
-            </div>
+            <el-form ref="sendForm" :rules="sendFormRules" :model="sendForm">
+                <el-form-item  class="form-item" prop="sendMethod">
+                        <div class="label">Metodo de envio</div>
+                        <el-select v-model="sendMethod" placeholder="Selecciona metodo de envio">
+                        <el-option
+                            v-for="item in sendMethodOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                            </el-option>
+                        </el-select>
+                </el-form-item>
+                <el-form-item class="form-item" prop="payMethod">
+                        <div class="label">Metodo de pago</div>
+                        <el-select v-model="payMethod" placeholder="Selecciona metodo de pago">
+                        <el-option
+                            v-for="item in payMethodOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                            </el-option>
+                        </el-select>
+                </el-form-item>
+            </el-form>
+            
+            
         </div>
-        <button class="btn-primary w-100" @click="toFinal()">Continuar</button>
+        <button :class="{'button-muted': FormValidated}" class="btn-primary w-100" @click="toFinal()">Continuar</button>
     </div>
 </template>
 <script>
 export default {
-    name: "sendMethods",
+    name: "SubmissionForm",
     data: function(){
+
+        var checkSendMethod = (rule, value, callback) => {
+            if(!value){
+                return callback( new Error('Introduzca un metodo de envio'))
+            }
+        }
+
+        var checkPayMethod = (rule, value, callback) => { 
+            if(!value){
+                return callback(new Error('Introduzca un metodo de pago'))
+            }
+        }
+
         return({
+            labData: [],
+            tableData: [],
+            samplesCost: 0,
+            sendCost: 20000,
+
+            formIsValid : false,
+
+            sendForm: {
+                sendMethod: '',
+                payMethod:'',
+            },
+
+            sendFormRules:{
+                sendMethod:[
+                    {validator: checkSendMethod, trigger: 'blur'}
+                ],
+                payMethod:[
+                    {validator: checkPayMethod, trigger: 'blur'}
+                ]
+            },
+
         payMethodOptions: [{
           value: 'paypal',
           label: 'Paypal'
@@ -97,11 +137,50 @@ export default {
 
 methods:{
     toFinal(){
-        this.$emit('to-final-steps', {
+        this.$router.push({name: 'finalSteps'})
+        console.log('hacia final')
+        /*this.$emit('to-final-steps', {
             status: 5
-        })
+        })*/
+    },
+    getLabById(){
+        var filteredLab = this.$store.state.labList.filter(n => n.id == this.$route.params.labId)
+        this.labData = filteredLab[0]
+    },
+    getTableDataById(){
+        var filteredTable = this.$store.state.samples.filter(n => n.tableId == this.$route.params.tableId)
+        this.tableData = filteredTable[0]
+    },
+    SectionName(){
+        this.$EventBus.$emit("section-name", {sectionName: "Formulario de envio", activeFiltersButton: false});
     }
 },
+
+computed:{
+    FormValidated(){
+        if(this.sendForm.sendMethod == "" && this.sendForm.payMethod == ""){
+            return true;
+        }else{ 
+            return false;
+        }
+    },
+    SamplesCost(){
+        if(this.tableData.tableContent.length <= this.labData.pricing.wholesalePolitic){
+            return this.labData.pricing.forUnit * this.tableData.tableContent.length
+        }else{
+            return this.labData.pricing.wholesale * this.tableData.tableContent.length
+        }
+    },
+    TotalPrice(){
+        return this.sendCost + this.SamplesCost;
+    }
+},
+
+mounted(){
+    this.getLabById();
+    this.getTableDataById();
+    this.SectionName();
+}
 
 }
 </script>
@@ -109,6 +188,7 @@ methods:{
     .lab-info-card, .direction-card, .send-method{
         border: $border;
         box-shadow: $shadow;
+        border-radius: 5px;
         padding: 1rem;
         margin: 1rem 0;
     }
@@ -121,10 +201,25 @@ methods:{
             flex-direction: column;
             justify-content: space-between;
             border-right: $border;
-
-            .lab-name{
-                font-weight: 400;
+            .card-pres{
+                display: flex;
+                align-items: center;
+                img{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 100%;
+                    border: $border;
+                    box-shadow: $shadow;
+                    position: relative;
+                    object-fit: cover;
+                    margin-right: .5rem;
+                }
+                .lab-name{
+                    font-weight: 400;
+                    line-height: 1.3;
+                }
             }
+            
 
             .price{
                 small{
@@ -163,11 +258,11 @@ methods:{
 
     .form-item{
     width: 100%;
-    margin: 1rem auto;
+    margin: 0 auto;
         .label{
             color: $text-muted;
             font-weight: .7rem;
-            margin-bottom: .5rem;
+            margin-bottom: 0rem;
             margin-left: .5rem;
             font-weight: 200;
         }
@@ -181,7 +276,9 @@ methods:{
             }
         }
         
-          
-}
+    }
 
+    .button-muted{
+        background: $text-muted;
+    }
 </style>

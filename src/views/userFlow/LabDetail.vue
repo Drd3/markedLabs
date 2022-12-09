@@ -43,7 +43,7 @@
         </section>
         <section class="reviews">
             <div class="ratings">
-                <h1>4.5</h1>
+                <h1>{{labData.starRating}}</h1>
                 <div class="all-reviews-count">54 CALIFICACIONES</div>
 
                 <div class="ratings-percents">
@@ -79,7 +79,7 @@
                     <small>Precio a partir de {{labData.pricing.wholesalePolitic}} unidades</small>
                     <div>{{labData.pricing.wholesale}}</div>
                 </div>
-            </div>
+            </div> 
             <div class="order-service-button-box">
                 <button class="btn-primary order-service-button" @click="ToForms()">Ordenar servicio</button>
             </div>
@@ -94,21 +94,45 @@ export default {
         LabHeader
     },
     props:[
-        "labData"
     ],
     data: function(){
         return({
-
+            labData: {},
+            labId: this.$route.params.labId
         })
     },
     methods:{
         ToForms(){
-            this.$emit('to-forms', {
+            if(this.$store.state.userLogged){
+                this.$router.push({name: 'samplesForm', params: {labId}})
+                /*this.$emit('to-forms', {
                 labData: this.labData,
                 status: 3
-            })
-            console.log("To Forms")
+                })
+                console.log("To Forms")*/
+            }else{
+                this.$router.push({name: 'login', params: { msg: "Debes loguearte primero para continuar", status: 1, labId: this.$route.params.labId}})
+                /*this.$emit('to-forms', {
+                    labData: this.labData,
+                    status: 7,
+                    msg: "Debes loguearte primero"
+                })*/
+                console.log("To Forms")
+            }
+            
+        },
+
+        getLabById(){
+            var filteredLab = this.$store.state.labList.filter(n => n.id == this.$route.params.labId)
+            this.labData = filteredLab[0]
+        },
+        SectionName(){
+            this.$EventBus.$emit("section-name", {sectionName: "Detalle del laboratorio", activeFiltersButton: false});
         }
+    },
+    mounted(){
+        this.getLabById()
+        this.SectionName()
     }
 }
 </script>

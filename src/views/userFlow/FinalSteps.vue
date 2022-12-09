@@ -47,8 +47,13 @@ export default {
             let route = this.$router.resolve({ path: "/samplesTags" });
             window.open(route.href)
         },
-
+        SectionName(){
+            this.$EventBus.$emit("section-name", {sectionName: "Pasos finales", activeFiltersButton: false});
+        }
     },
+    mounted(){
+        this.SectionName()
+    }
 
 
 }

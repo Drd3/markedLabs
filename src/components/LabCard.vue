@@ -33,8 +33,13 @@
     export default{
         name: "LabCard",
         props:[
-            "labData"
-        ]
+            'labData'
+        ],
+        data: function(){
+            return({
+            })
+        },
+
     }
 </script>
 <style lang="scss" scoped>
