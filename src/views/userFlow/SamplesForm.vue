@@ -47,8 +47,8 @@
             
         </el-autocomplete>
         </div>
-        <SamplesTable :samples-data="items" :updateSamplesData="updateTable"></SamplesTable>
-        <button class="contract-service btn-primary" @click="toSubmissionForm()">Contratar<i class="el-icon-right"></i></button>
+        <SamplesTable :pricingData="pricingList"></SamplesTable>
+        
     </div>
 </template>
 
@@ -87,25 +87,20 @@ export default {
 
             labData: [],
 
+            pricingList: {}
+
         })
     },
     methods: {
 
-      toSubmissionForm(){
-        this.$router.push({name: 'submissionForm', params:{ labId: this.$route.params.labId, tableId: this.$store.state.samples[0].tableId} })
-          /*this.$emit('to-submission-form', {
-              status: 4,
-              labData: this.labData
-          })*/
-          console.log("A formlario de el envio")
-      },
+      
       
       loadAll() {
 
         var analisysList = []
 
         this.labData.labAnalisysTypes.forEach(analisys => {
-                analisysList.push({ "value": analisys},)
+            analisysList.push({ "value": analisys},)
         });
         
         return analisysList;
@@ -137,6 +132,14 @@ export default {
 
       SectionName(){
           this.$EventBus.$emit("section-name", {sectionName: "Formulario de muestras", activeFiltersButton: false});
+      },
+
+      addAnalysisType(){
+        this.analisysType = this.$store.state.AnalisysType
+      },
+
+      loadlabPricing(){
+        this.pricingList = this.labData.pricing 
       }
     },
 
@@ -150,6 +153,9 @@ export default {
       this.getLabById();
       this.links = this.loadAll();
       this.SectionName()
+      this.addAnalysisType()
+      this.loadlabPricing()
+      
     }
 }
 </script>

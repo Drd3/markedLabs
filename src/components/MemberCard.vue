@@ -44,6 +44,7 @@ export default{
             }
         }
         .card-body{
+            margin-top: 1rem;
             .member-name{
                 font-size: 1.5rem;
                 font-weight: 300;

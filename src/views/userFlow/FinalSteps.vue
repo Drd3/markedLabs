@@ -22,6 +22,13 @@
                    <i class="el-icon-printer"></i> imprimir etiquetas
                 </button>
             </div>
+            <div class="step">
+                <div class="index">3.</div>
+                <div class="info">
+                    Te notificaremos por E-mail o via SMS cuando el analisis este completo.
+                    Los resultados te llegaran a: <span class="selected-email"> {{this.$store.state.loginData.email}} </span>.
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -44,8 +51,7 @@ export default {
 
     methods:{
         toSamplesTags(){
-            let route = this.$router.resolve({ path: "/samplesTags" });
-            window.open(route.href)
+            let route = this.$router.push({ name: "samplesTags" });
         },
         SectionName(){
             this.$EventBus.$emit("section-name", {sectionName: "Pasos finales", activeFiltersButton: false});
@@ -91,6 +97,10 @@ export default {
                 i{
                     font-size: 1.2rem;
                 }
+            }
+
+            .selected-email{
+                text-decoration: underline;
             }
 
         }

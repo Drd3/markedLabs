@@ -34,7 +34,7 @@
             },
             labId:{
                 type: Number,
-                default: ""
+                default: null
             }
         },  
         data: function(){
@@ -80,8 +80,12 @@
                         this.$emit('to-samples-form', 3)  
                         if(this.status == 1){
                             var id = this.labId;
+                            this.$store.dispatch('userLoggedIn')
                             this.$router.push({name: 'samplesForm', params:{ id }})
-                        }                  
+                        }if(this.status == 2){
+                            this.$store.dispatch('userLoggedIn')
+                            this.$router.push({name: 'home'})
+                        }                 
                     }else{
                         this.errorMsg = "Correo o contraseña son incorrectos"
                     }

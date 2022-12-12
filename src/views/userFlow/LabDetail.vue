@@ -70,7 +70,7 @@
             </div>
         </section>
         <div class="buy-service">
-            <div class="prices">
+            <div class="prices" v-if="!this.labPricing">
                 <div class="price-type">
                     <small>Precio por unidad</small>
                     <div>{{labData.pricing.forUnit}}</div>
@@ -79,7 +79,13 @@
                     <small>Precio a partir de {{labData.pricing.wholesalePolitic}} unidades</small>
                     <div>{{labData.pricing.wholesale}}</div>
                 </div>
-            </div> 
+            </div>
+            <div class="prices" v-else>
+                <div class="price-type">
+                    <small>Analisis completo</small>
+                    <div>{{labData.pricing.analysisCompleteCost}}</div>
+                </div>
+            </div>
             <div class="order-service-button-box">
                 <button class="btn-primary order-service-button" @click="ToForms()">Ordenar servicio</button>
             </div>
@@ -93,7 +99,9 @@ export default {
     components:{
         LabHeader
     },
-    props:[
+    props:[ 
+        "labPricing",
+        "labAnalysisType"
     ],
     data: function(){
         return({
@@ -104,7 +112,7 @@ export default {
     methods:{
         ToForms(){
             if(this.$store.state.userLogged){
-                this.$router.push({name: 'samplesForm', params: {labId}})
+                this.$router.push({name: 'samplesForm', params: { labId : this.labId}})
                 /*this.$emit('to-forms', {
                 labData: this.labData,
                 status: 3
@@ -128,11 +136,19 @@ export default {
         },
         SectionName(){
             this.$EventBus.$emit("section-name", {sectionName: "Detalle del laboratorio", activeFiltersButton: false});
+        },
+        HandlePricing(){
+            this.$store.dispatch('analysisType', this.labPricing)
+        },
+        HandleAnalysisType(){
+            this.$store.dispatch('analysisType', this.labAnalysisType)
         }
     },
     mounted(){
         this.getLabById()
         this.SectionName()
+        this.HandlePricing()
+        this.HandleAnalysisType()
     }
 }
 </script>

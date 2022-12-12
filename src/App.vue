@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view/>
+    <Footer class="d-print-none"></Footer>
   </div>
 </template>
 
@@ -9,9 +10,11 @@
 
 
 import NavBar from './components/NavBar.vue';
+import Footer from './views/Footer.vue';
 export default {
   components:{
-    NavBar
+    NavBar,
+    Footer
   }
 }
 </script>
@@ -27,5 +30,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   
 }
+
+@media print{
+    .d-print-none{
+        display: none;
+    }
+}
+
 
 </style>

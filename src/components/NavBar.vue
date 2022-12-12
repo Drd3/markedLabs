@@ -7,9 +7,13 @@
                 </router-link>
             </div>
             <div class="navbar-content ">
-                <div class="nav-item">
+                <div class="nav-item" v-if="!this.$store.state.userLogged">
                     <i class="el-icon-user"></i>
                 </div> 
+
+                <div class="nav-item user-name" v-if="this.$store.state.userLogged">
+                    {{this.$store.state.loginData.userName}}
+                </div>
 
                 <div @click="(showNavbar = true)"  class="nav-item">
                     <i class="el-icon-more-outline"></i>
@@ -55,6 +59,11 @@
                     color: #fff;
                     margin: .5rem;
                     font-size: 1.5rem;
+                }
+                .user-name{
+                    font-size: 1rem;
+                    margin-top: 1.2rem;
+                    text-decoration: underline;
                 }
             }
         }

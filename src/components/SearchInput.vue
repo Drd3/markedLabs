@@ -43,12 +43,24 @@ export default ({
                     label: "analisis completo"
                 },
                 {
-                    value: "ph",
+                    value: "pH",
                     label: "pH"
                 },
                 {
                     value: "cadmio",
                     label: "Cadmio"
+                },
+                {
+                    value: "acidez",
+                    label: "Acidez"
+                },
+                {
+                    value: "boro",
+                    label: "Boro"
+                },
+                {
+                    value: "azufre",
+                    label: "Azufre"
                 },
             ]
         })
@@ -56,7 +68,7 @@ export default ({
     methods:{
         Search(){
             if(this.state != ""){
-                this.$router.push('/UserFlowManager');
+                this.$router.push({name: 'ResultsPage', params: { analysisOf: this.analisysSelected}});
             }
         },
 

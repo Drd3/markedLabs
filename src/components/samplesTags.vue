@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <button @click="printDoc" class="d-print-none">print-doc</button>
+    <div class="container-2">
+        <button @click="printDoc" class="d-print-none btn-primary w-100">Imprimir etiquetas</button>
         <div v-for="(sample, index) in samplesList" :key="index" class="sample-tag">
             <div>Numero de muestra</div>
             <div>{{(index + 1)}} </div>
@@ -32,24 +32,29 @@ export default {
     methods:{
         printDoc(){
             window.print()
+        },
+        getSamplesData(){
+            this.samplesList = this.$store.state.samples[0].tableContent
         }
     },
-    mounted:{
-        printWindow(){
-            Vue.use(VueHtmlToPaper);
-        }
+    mounted(){
+        this.getSamplesData()
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.container{
+    display: flex;
+    flex-wrap: wrap;
+}
     .sample-tag{
         display: grid;
         grid-template-columns: 1fr 1fr;
         margin: .3rem;
         border: $border;
         max-width: 10cm;
-        float: left;
+        
 
         div{
             padding: .2rem;

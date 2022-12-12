@@ -36,8 +36,8 @@
                 </div>
             </div>
         </div>
-
-        <LabCard v-for="(lab, index) in labList"  :key="index" :lab-data="lab"  @click.native="ToDetails(lab.id)" ></LabCard>
+        
+        <LabCard v-for="(lab, index) in getLabsBySearchParams"  :key="index" :lab-data="lab" :completeAnalysis="handleAnalysisComplete" @click.native="ToDetails(lab.id)" ></LabCard>
     </div>
 </template>
 
@@ -57,6 +57,7 @@ export default{
             maxPrice: 0,
             city: "",
             showFilters:false,
+            analysisComplete: false,
             //===== SIMULATED DATA=======//
 
             cityList: [
@@ -70,12 +71,13 @@ export default{
                 },
             ],
 
-            labList: this.$store.state.labList
+            labList: {}
         })
     },
     methods:{
         ToDetails(labId){
-            this.$router.push({ name: 'labDetail', params: { labId } })
+            
+            this.$router.push({ name: 'labDetail', params: {labId: labId, labPricing: this.handleAnalysisComplete, labAnalysisType: this.$route.params.analysisOf} })
             /*this.$emit('to-details', {
                 labData : lab,
                 status : 2} 
@@ -90,10 +92,27 @@ export default{
             this.$EventBus.$on('active-filters', (data) => {
                 this.showFilters = data
             })
-        }
+        },
+        
+        
     },
     computed:{
-
+        getLabsBySearchParams(){
+            if(this.$route.params.analysisOf == "analysisComplete"){
+                this.analysisComplete= true
+                return this.$store.state.labList
+            }else{
+                return this.$store.state.labList.filter(lab => lab.labAnalisysTypes.includes(this.$route.params.analysisOf) )
+            }
+        },
+        handleAnalysisComplete(){
+            if(this.$route.params.analysisOf == "analysisComplete"){
+                return true        
+            }else{
+                return false
+            }
+        },
+        
     },
 
     mounted(){
@@ -108,6 +127,7 @@ export default{
 
     .container{
         padding: 0;
+        background: #F4F4F4;
     }
     .filter-list-container{
         position: fixed;

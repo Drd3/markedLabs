@@ -43,7 +43,18 @@
 
     </div>
       <button class="btn-add-sample btn-primary" @click="handleAdd()"><i class="el-icon-plus"></i>Añadir muestra</button>
+
+      <div class="lab-pricing">
+        <div class="actualprice">
+          <small>Costo total</small>
+          <div>{{handlePrice}}</div>
+        </div>
+        <button class="contract-service btn-primary" @click="toSubmissionForm()">Contratar<i class="el-icon-right"></i></button>
+
+      </div>
     </div>
+
+    
   </template>
   
   <script>
@@ -65,13 +76,11 @@
       BIconCheck,
       BButton,
     },
-    props:[      
+    props:[
+      "pricingData"
     ],
     data() {
       return {
-
-        sendData: false,
-
         fields: [
           { key: "edit", label: "" },
           {
@@ -143,12 +152,24 @@
     },
     methods: {
 
+      toSubmissionForm(){
+        this.$store.dispatch('updateSampleTable', this.items)
+        this.$router.push({name: 'submissionForm', params:{ labId: this.$route.params.labId, tableId: this.$store.state.samples[0].tableId} })
+          /*this.$emit('to-submission-form', {
+              status: 4,
+              labData: this.labData
+          })*/
+          console.log("A formlario de el envio")
+      },
+
       handleAdd() {
+        const newId = Date.now();
         this.rowUpdate = {
-          edit: true,
-          id:  Date.now(),
+          edit: false,
+          id:  newId,
           action: "add",
           data: {
+            id: newId,
             property:"",
             propertyIdentification: "",
             dateOfSampling: null,
@@ -170,16 +191,23 @@
       },
       handleDelete(data) {
         this.rowUpdate = { id: data.id, action: "delete" };
-      }
+      },
+      
     },
-
-    watch:{
-      items(newVal, oldVal){
-        this.$store.state.sample = newVal
-        this.$store.dispatch('updateSampleTable')
-        console.log(newVal, "new val")
-      } 
+    computed:{
+      handlePrice(){
+        if(this.$store.state.labAnalysisComplete){
+          return this.pricingData.analysisCompleteCost
+        }else{
+          if(this.items.length >= this.pricingData.wholesalePolitic){
+            return this.pricingData.wholesale * this.items.length
+          }else{
+            return this.pricingData.forUnit * this.items.length
+          }
+        }
+      }
     }
+
 
   };
   </script>
@@ -233,5 +261,26 @@
     width: 100%;
     margin-bottom: 1rem;
     opacity: .7;
+  }
+
+  .lab-pricing{
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .actualprice{
+      small{
+        display: block;
+        line-height: 1;
+      }
+      div{
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 1;
+      }
+    }
+
   }
   </style>

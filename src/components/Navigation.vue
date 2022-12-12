@@ -23,7 +23,7 @@
                 }else if(this.$route.name == 'samplesForm'){
                     this.$router.push({name: 'labDetail', params: this.labId})
                 }else if(this.$route.name == 'labDetail'){
-                    this.$router.push({name: 'ResultsPage'})
+                    this.$router.push({name: 'ResultsPage', params:{ analysisOf: this.$store.state.AnalisysType}})
                 }else{
                     this.$router.go(-1)
                 }

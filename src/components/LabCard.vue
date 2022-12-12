@@ -9,14 +9,14 @@
             <div class="location">{{labData.labLocation}}</div>
         </div>
         <div class="lab-service-info">
-            <div class="lab-analysis-list">
+            <div class="lab-analysis-list" v-if="completeAnalysis">
                 <span v-for="(analysis, index) in labData.labAnalisysTypes" :key="index"> {{analysis}} </span>
-                <div class="see-more">Ver más</div>
+                <!--<div class="see-more">Ver más</div>-->
             </div>
             <div class="lab-service">
                 <div class="service-item">Entrega en 12 dias aprox.</div>
             </div>
-            <div class="lab-pricing">
+            <div class="lab-pricing" v-if="!completeAnalysis">
                 <div class="price">
                     <small>Precio por unidad</small>
                     <div class="cost">{{labData.pricing.forUnit}}</div>
@@ -26,6 +26,12 @@
                     <div class="cost">{{labData.pricing.wholesale}}</div>
                 </div>
             </div>
+            <div class="lab-pricing" v-if="completeAnalysis">
+                <div class="price">
+                    <small>Analisis completo</small>
+                    <div class="cost">{{labData.pricing.analysisCompleteCost}}</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -33,7 +39,8 @@
     export default{
         name: "LabCard",
         props:[
-            'labData'
+            'labData',
+            'completeAnalysis'
         ],
         data: function(){
             return({
@@ -46,12 +53,14 @@
     .lab-card{
         display: flex;
         justify-content: space-between;
+        margin: 0 auto;
+        margin-bottom: 1rem;
         padding: 1rem 1rem;
         border: $border;
         max-width: 400px;
         min-height: 200px;
-        margin: auto;
         box-shadow: 0px 2px 3px 1px rgb(0 0 0 / 32%);
+        background: #fff;
         .lab-data-info{
             padding-right: 1rem;
             border-right: $border;

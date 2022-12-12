@@ -31,8 +31,18 @@
             </div>
             </div>
         </div>
+        <div class="user-info-card">
+            <div>
+                <small>Nombre de usuario:</small>
+                <div>{{this.$store.state.loginData.userName}}</div>
+            </div>
+            <div>
+                <small>Correo electronico:</small>
+                <div>{{this.$store.state.loginData.email}}</div>
+            </div>
+        </div>
         <div class="direction-card">
-            Direccion del destino
+            <small>Direccion del destino</small>
             <div>{{labData.labLocation}} - {{labData.address}}</div>
         </div>
         <div class="send-method">
@@ -69,6 +79,9 @@
 <script>
 export default {
     name: "SubmissionForm",
+    props:[
+        "totalPrice"
+    ],
     data: function(){
 
         var checkSendMethod = (rule, value, callback) => {
@@ -185,7 +198,10 @@ mounted(){
 }
 </script>
 <style lang="scss" scoped>
-    .lab-info-card, .direction-card, .send-method{
+.container{
+    margin-bottom: 2rem;
+}
+    .lab-info-card, .direction-card, .send-method, .user-info-card{
         border: $border;
         box-shadow: $shadow;
         border-radius: 5px;
@@ -255,7 +271,12 @@ mounted(){
         }    
     }
 
-
+    .user-info-card{
+        display: flex;
+        & > div{
+            margin-right: 1.5rem;
+        }
+    }
     .form-item{
     width: 100%;
     margin: 0 auto;
@@ -278,7 +299,4 @@ mounted(){
         
     }
 
-    .button-muted{
-        background: $text-muted;
-    }
 </style>

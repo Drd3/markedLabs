@@ -22,7 +22,7 @@ const routes = [
     component: UserFlowManager,
     children:[
       {
-        path: "",
+        path: "/:analysisOf",
         name: 'ResultsPage',
         component: ResultsPage,
         props: true
@@ -30,7 +30,8 @@ const routes = [
       {
         path:'/labDetail/:labId',
         name: 'labDetail',
-        component: LabDetail
+        component: LabDetail,
+        props:true
       },
       {
         path:'/samplesForm/:labId',
@@ -52,14 +53,13 @@ const routes = [
         path:'/finalSteps',
         name: 'finalSteps',
         component:FinalSteps
+      },
+      {
+        path: "/samplesTags",
+        name: 'samplesTags',
+        component: samplesTags
       }
-      
     ]
-  },
-  {
-    path: "/samplesTags",
-    name: 'samplesTags',
-    component: samplesTags
   },
   {
     path: '/about',

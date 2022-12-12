@@ -2,6 +2,17 @@
   <div class="">
       <header>
         <div class="container">
+          <nav>
+            <div class="home-nav-item hexagon user-link" v-if="!this.$store.state.userLogged" @click="toLogin()">
+              <i class="el-icon-user"></i>
+            </div>
+            <div class="home-nav-item hexagon user-link" v-if="this.$store.state.userLogged">
+              <img src="../../assets/img/photo.jpg" class="fit-cover"/>
+            </div>
+            <div class="home-nav-item hexagon menu-link">
+              <i class="el-icon-more-outline"></i>
+            </div>
+          </nav>
           <div class="header">
             <h1 class="header-title">
             Market Labs
@@ -34,10 +45,13 @@
           <img class="map-image" src="../../assets/img/markedlab-map.png"/>
           <div class="market-labs-desc">
             <p>
-            Es una plataforma web en donde los laboratorios pueden prestar sus servicios de análisis, funcionaria un "marketplace" donde se puede contratar un servicio de investigación y el usuario envía las muestras de estudio.
+              Market Labs es un "marketplace" donde los laboratorios pueden prestar sus servicios de investigación, a través de una plataforma que permite agilizar el proceso de análisis.
             </p>
             <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+              Los laboratorios tienden a demorar los resultados debido a que llevan a cabo procesos repetitivos y poco estandarizados. Adicionalmente, tampoco se encuentra una plataforma que los integre o les permita ser visibles en el mercado.
+            </p>
+            <p>
+              Mediante esta plataforma se busca favorecer la investigación a nivel nacional, a través de un ecosistema que permita visibilizar los laboratorios y protocolos que agilicen la prestación de sus servicios. 
             </p>
           </div>
           <DecorativeHexagons :shadows-active="false"></DecorativeHexagons>
@@ -55,12 +69,12 @@
                 </div>
               </div>
               <div class="objective-text">
-                Brindar una plataforma que impulse el desarrollo cientifico en el pais.
+                Desarrollar una plataforma que integre los servicios de los laboratorios y estandarice sus protocolos.
               </div>
             </div>
             <div class="objective">
               <div class="objective-text">
-                Optimizar el flujo de trabajo evitando flujos innecesarios y mejorando algunos procesos.
+                Automatizar los protocolos operativos en la recopilación de la información y venta de servicios.
               </div>
               <div class="objective-image hexagon-shadow">
                 <div>
@@ -76,7 +90,7 @@
                 </div>
               </div>
               <div class="objective-text">
-                Dar visibilidad a los laboratorios con un sistema que muestre a los laboratorios a nivel nacional.   
+                Fortalecer la conectividad y visibilidad comercial de los laboratorios a nivel nacional.   
               </div>
             </div>
 
@@ -106,7 +120,7 @@
             <div class="explanation-item-container">
               <div class="explanation-item">
                 <div class="explanation-image hexagon">
-                  <img src="../../assets/img/exp-1.png"/>
+                  <img src="../../assets/img/selection.png"/>
                 </div>
                 <div class="explanation-info">
                   <div class="explanation-title">
@@ -120,7 +134,7 @@
             <div class="explanation-item-container">
               <div class="explanation-item">
                 <div class="explanation-image hexagon">
-                  <img src="../../assets/img/exp-1.png"/>
+                  <img src="../../assets/img/forms.png"/>
                 </div>
                 <div class="explanation-info">
                   <div class="explanation-title">
@@ -134,7 +148,7 @@
             <div class="explanation-item-container">
               <div class="explanation-item">
                 <div class="explanation-image hexagon">
-                  <img src="../../assets/img/exp-1.png"/>
+                  <img src="../../assets/img/envio-03.png"/>
                 </div>
                 <div class="explanation-info">
                   <div class="explanation-title">
@@ -148,7 +162,7 @@
             <div class="explanation-item-container">
               <div class="explanation-item">
                 <div class="explanation-image hexagon">
-                  <img src="../../assets/img/exp-1.png"/>
+                  <img src="../../assets/img/analisis-04.png"/>
                 </div>
                 <div class="explanation-info">
                   <div class="explanation-title">
@@ -162,7 +176,7 @@
             <div class="explanation-item-container">
               <div class="explanation-item">
                 <div class="explanation-image hexagon">
-                  <img src="../../assets/img/exp-1.png"/>
+                  <img src="../../assets/img/envio-muestras-05.png"/>
                 </div>
                 <div class="explanation-info">
                   <div class="explanation-title">
@@ -278,6 +292,13 @@ export default {
 
 
     })
+  },
+  methods:{
+    toLogin(){
+      if(!this.$store.state.userLogged){
+        this.$router.push({name:'login', params: { status : 2 }})
+      }
+    }
   }
 }
 </script>
@@ -296,6 +317,25 @@ export default {
     text-align: center;
     color: $success;
 
+    nav{
+      width: fit-content;
+      margin-left: auto;
+      .menu-link{
+        margin-top: -10px;
+        margin-left: 29px;
+      }
+      .home-nav-item{
+        background: $success;
+        color: #fff;
+        width: fit-content;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+      }
+    }
     .header-title{
       font-weight: 400;
       line-height: 1;
@@ -410,6 +450,7 @@ export default {
         align-items: center;
         margin: -.1rem 0;
         justify-content: center;
+        align-items: flex-start;
         .explanation-image{
           height:$hexagonSize;
           width: $hexagonSize;
@@ -420,10 +461,10 @@ export default {
           justify-content: center;
           
           img{
-            width: 50%;
-            height: 50%;
+            width: 60%;
+            height: 60%;
             position: relative;
-            object-fit: contain;
+            object-fit: fill;
           }
         }
         .explanation-info{
@@ -436,8 +477,9 @@ export default {
           }
           span{
             font-size: .9rem;
-            line-height: 1px;
-            display: none;
+            line-height:1;
+            display: block;
+            margin-top: .2rem;
           }
         }
       }
@@ -471,8 +513,7 @@ export default {
   .our-team{
 
     .hooper{
-      min-height: fit-content;
-      height: 500px;
+      min-height: 350px;
       margin-top: 2rem
     }
   }
