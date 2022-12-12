@@ -14,7 +14,7 @@ export default new Vuex.Store({
     loginData: {
       userName: "Usuario 01",
       email: "example@example.com",
-      password: "123456"
+      password: "2255ab"
     },
 
     labList:[

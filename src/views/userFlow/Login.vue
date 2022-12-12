@@ -2,6 +2,9 @@
     <div class="container">
         <h2>Bienvenido</h2>
         <div class="situation-message">{{msg}}</div>
+
+        <button class="btn-complete-form" @click="autoCompleteForm()">Completar formulario</button>
+        
         <el-form :model="loginForm" :rules="rules" ref="loginForm">
             <el-form-item class="form-item" prop="email">
                 <div class="label">Correo electronico</div>
@@ -14,7 +17,7 @@
             <div class="error-msg">{{errorMsg}}</div>
             <div >{{this.$store.state.loginData.email}}{{this.$store.state.loginData.password}}</div>
             <el-form-item>
-                <button class="btn-primary submit-button" @click="submitForm('loginForm')">Ingresar</button>
+                <el-button class="btn-primary submit-button" @click="submitForm('loginForm')">Ingresar</el-button>
             </el-form-item>
         </el-form>
 
@@ -73,9 +76,14 @@
             })
         },
         methods:{
-            submitForm() {
-             
-                if(this.loginForm.email != ""  && this.loginForm.password != " "){
+            autoCompleteForm(){
+                this.loginForm.email = this.userLogged.email
+                this.loginForm.password = this.userLogged.password
+            },  
+            submitForm(formName) {
+
+                    console.log(formName, 'Entra al metodo de validacion')
+                    if(this.loginForm.email && this.loginForm.password){
                     if(this.loginForm.email == this.userLogged.email && this.loginForm.password == this.userLogged.password) {
                         this.$emit('to-samples-form', 3)  
                         if(this.status == 1){
@@ -92,7 +100,8 @@
                 }
                 else{
                     this.errorMsg = "Introduce todos los datos"
-                }       
+                    return false;
+                }   
             },
         }
     }
@@ -142,5 +151,12 @@
             font-weight: 400;
             font-size: 1rem;
             padding: .5rem;
+        }
+
+        .btn-complete-form{
+            margin: auto;
+            text-decoration: underline;
+            color: $secondary;
+            display: block;
         }
 </style>
