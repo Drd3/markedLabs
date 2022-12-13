@@ -7,6 +7,8 @@
             :lab-location="labData.labLocation"
             :lab-email="labData.email"
             :lab-phone="labData.phone"
+            :acredited="labData.acredited"
+            :address="labData.address"
         ></LabHeader>
         
         <div class="lab-advantages">

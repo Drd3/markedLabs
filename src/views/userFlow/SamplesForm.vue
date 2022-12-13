@@ -7,6 +7,8 @@
             :lab-location="labData.labLocation"
             :lab-email="labData.email"
             :lab-phone="labData.phone"
+            :acredited="labData.acredited"
+            :address="labData.address"
         ></LabHeader>
         <div class="form-item">
             <div class="label">Tipo de muestra</div>
@@ -79,7 +81,7 @@ export default {
     },
     data: function(){
         return({
-            sampleType:"",
+            sampleType:"Suelos",
             analisysType: "",
             links: "",
             timeout: null,

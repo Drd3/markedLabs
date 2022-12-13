@@ -145,6 +145,8 @@ export default {
         return({
             showNavbar: false
         })
+    },
+    methods:{
     }
 }
 </script>

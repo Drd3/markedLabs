@@ -3,7 +3,10 @@
         <div class="lab-data-info">
             <div class="lab-star-rating"><i class="el-icon-star-on"></i>{{labData.starRating}}</div>
             <div class="lab-card-logo">
-                <img :src="labData.labLogo" class="fit-cover" :alt="labData.labName">
+                <div class="lab-img">
+                    <img :src="labData.labLogo" class="fit-cover" :alt="labData.labName"/>
+                </div>
+                <span class="acreditation-icon" v-if="labData.acredited"><i class="el-icon-check"></i></span>
             </div>
             <div class="lab-name">{{labData.labName}}</div>
             <div class="location">{{labData.labLocation}}</div>
@@ -83,11 +86,34 @@
             .lab-card-logo{
                 width: 70px;
                 height: 70px;
-                border-radius: 100px;
-                overflow: hidden;
-                border: 1px solid #e6e6e6;
                 margin: 1rem auto .2rem auto;
                 box-shadow: -1px 1px 2px 1px rbga(0, 0, 0, .5);
+                position: relative;
+
+                .lab-img{
+                    border: 1px solid #e6e6e6;
+                    box-shadow: $shadow;
+                    border-radius: 100px;
+                    overflow: hidden;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .acreditation-icon{
+                    background: $secondary;
+                    color: $success;
+                    display: block;
+                    width: 25px;
+                    height: 25px;
+                    text-align: center;
+                    border-radius: 100px;
+                    border: 4px solid #fff;
+                    position: absolute;
+                    right: 5px;
+                    bottom: -7px;
+                    font-size: .7rem;
+
+                }
             }
 
             .lab-name{

@@ -15,7 +15,7 @@
                     Contactanos en:
                 </h4>
                 <div class="footer-item-info">
-                    markedlabs@gmail.com
+                    marketlabs@gmail.com
                 </div>
             </div>
             <div class="footer-item">
