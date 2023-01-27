@@ -15,7 +15,7 @@
         <div v-if="showAnalysisTypes" class="in-text">
             / de:
         </div>
-        <el-select :class="{'select-active': showAnalysisTypes}" @change="SelectedOption()" class="analysis-select" v-model="analisysSelected" placeholder="Tipo de analisis">
+        <el-select :class="{'select-active': showAnalysisTypes}" @change="CreateAnalisisList(analisysSelected)" class="analysis-select" v-model="analisysSelected" placeholder="Tipo de analisis">
             <el-option
             v-for="item in analysisTypes"
             :key="item.value"
@@ -37,6 +37,7 @@ export default ({
             state: '',
             showAnalysisTypes: false,
             analisysSelected: "",
+            analisysSelectedList: [],
             analysisTypes: [
                 {
                     value: "analysisComplete",
@@ -68,10 +69,13 @@ export default ({
     methods:{
         Search(){
             if(this.state != ""){
-                this.$router.push({name: 'ResultsPage', params: { analysisOf: this.analisysSelected}});
+                this.$router.push({name: 'ResultsPage', params: { analysisOf: this.analisysSelectedList}});
             }
         },
-
+        CreateAnalisisList(item){
+            console.log(this.analisysSelectedList)
+            this.analisysSelectedList.push(item)
+        },
         querySearch(queryString, cb) {
         var links = this.links;
         var results = queryString ? links.filter(this.createFilter(queryString)) : links;

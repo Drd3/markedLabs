@@ -22,7 +22,7 @@ const routes = [
     component: UserFlowManager,
     children:[
       {
-        path: "/:analysisOf",
+        path: "/results",
         name: 'ResultsPage',
         component: ResultsPage,
         props: true

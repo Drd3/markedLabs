@@ -46,28 +46,28 @@
         <section class="reviews">
             <div class="ratings">
                 <h1>{{labData.starRating}}</h1>
-                <div class="all-reviews-count">54 CALIFICACIONES</div>
+                <div class="all-reviews-count">{{ GetTotalReviewsQuantity() }} CALIFICACIONES</div>
 
                 <div class="ratings-percents">
-                    <div class="percent-bar">1</div>
-                    <div class="percent-bar">2</div>
-                    <div class="percent-bar">3</div>
-                    <div class="percent-bar">4</div>
-                    <div class="percent-bar">5</div>
+                    <div v-for="(review, index) in labReviews.califications" :key="index" class="percent-bar" :style="{'width': CalculateReviewPercent(review) + '%'}">{{ index + 1 }} <span class="percent-indicator"> {{ CalculateReviewPercent(review) }}% </span> </div>
+                    <!-- <div class="percent-bar" style="width: 10%;">2 <span class="percent-indicator"> 10% </span></div>
+                    <div class="percent-bar" style="width: 20%;">3 <span class="percent-indicator"> 20% </span></div>
+                    <div class="percent-bar" style="width: 50%;">4 <span class="percent-indicator"> 50% </span></div>
+                    <div class="percent-bar" style="width: 20%;">5 <span class="percent-indicator"> 20% </span></div>-->
                 </div>
             </div>
             <div class="users-reviews">
-                <div class="review-container">
+                <div v-for="(commentary, index) in labReviews.comments" :key="index" class="review-container">
                     <div class="review-info">
-                        <span class="user-name">User</span>
-                        <span class="user-rating">4.5</span> 
-                        <span class="review-date">15 de noviembre de 2022</span>
+                        <span class="user-name">{{commentary.userName}}</span>
+                        <span class="user-rating">{{ commentary.userLabcalification }}<i class="el-icon-star-on"></i></span> 
+                        <span class="review-date">{{ commentary.postDate }}</span>
                     </div>
                     <p>
                         Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
                         nibh euismod tincidunt ut laoreet dolore magna aliquam 
                     </p>
-                    <div class="users-likes">A 78 usuarios les parece util</div>
+                    <div class="users-likes">A {{ commentary.usersAgree }} usuarios les parece util</div>
                 </div>
             </div>
         </section>
@@ -108,7 +108,25 @@ export default {
     data: function(){
         return({
             labData: {},
-            labId: this.$route.params.labId
+            labId: this.$route.params.labId,
+            labReviews:{
+                califications: [
+                     12,
+                     32,
+                    43,
+                     23,
+                     22
+                ],
+                comments:[
+                    {
+                        userName: "Lorem",
+                        comment: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam",
+                        userLabcalification: 4,
+                        usersAgree: 12,
+                        postDate: "15 de noviembre de 2022"
+                    }
+                ]
+            }
         })
     },
     methods:{
@@ -144,6 +162,16 @@ export default {
         },
         HandleAnalysisType(){
             this.$store.dispatch('analysisType', this.labAnalysisType)
+        },
+        GetTotalReviewsQuantity(){
+            let total = 0;
+            this.labReviews.califications.forEach(element => {
+                total = total + element
+            });
+            return total
+        },
+        CalculateReviewPercent(n){
+            return ((100 * n) / this.GetTotalReviewsQuantity()).toFixed(1)
         }
     },
     mounted(){
@@ -220,7 +248,7 @@ export default {
     .reviews{
         margin-top: 4rem;
         .ratings{
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
 
             h1{
                 margin: 0 auto .3rem auto;
@@ -243,10 +271,20 @@ export default {
                     background: $secondary;
                     color: #fff;
                     font-size: .85rem;
-                    padding: .01rem .1rem;
-                    width: 100%;
+                    padding: .02rem .05rem;
+                    max-width: 100%;
                     text-align: center;
-                    min-width: fit-content;
+                    min-width: 20px;
+                    position: relative;
+
+                    .percent-indicator{
+                        position: absolute;
+                        bottom: - 100%;
+                        color: $text-muted;
+                        left: 0;
+                        right: 0;
+                        text-align: center;
+                    }
                 }
             }
         }

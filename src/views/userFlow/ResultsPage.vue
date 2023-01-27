@@ -46,8 +46,9 @@ import LabCard from '@/components/LabCard.vue';
 
 export default{
     name: "ResultsPage",
-    props:{
-    },  
+    props:[
+        "analysisOf"
+    ],  
     components:{
         LabCard
     },
